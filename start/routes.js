@@ -16,6 +16,10 @@
 /** @type {typeof import('@adonisjs/framework/src/Route/Manager')} */
 const Route = use('Route')
 
+//POST
+Route.post('files', 'FileController.store')
+
+
 Route.get('/', () => {
   return { greeting: 'Hello world in JSON' }
 })
