@@ -19,6 +19,9 @@ const Route = use('Route')
 //POST
 Route.post('files', 'FileController.store')
 
+//GET
+Route.get('files/:id', 'FileController.show')
+
 
 Route.get('/', () => {
   return { greeting: 'Hello world in JSON' }

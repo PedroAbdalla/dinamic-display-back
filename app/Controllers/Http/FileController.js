@@ -7,6 +7,13 @@ const Helpers = use('Helpers')
  * Resourceful controller for interacting with files
  */
 class FileController {
+
+    async show ({ params, response}) {
+        const file = await File.findOrFail(params.id)
+        //converte para img
+        return response.download(Helpers.tmpPath(`uploads/${file.file}`))
+    }
+
     async store({ request, response }) {
         try {
             if(!request.file) return
