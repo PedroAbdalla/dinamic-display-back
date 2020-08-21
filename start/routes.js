@@ -18,11 +18,18 @@ const Route = use('Route')
 
 //POST
 Route.post('files', 'FileController.store')
+Route.post('users', 'UserController.store')
+Route.post('sessions', 'SessionController.store')
+
 
 //GET
 Route.get('files/:id', 'FileController.show')
 
+// Route.group(() => {
+    //CRUD
+    Route.resource('categorias', 'CategoriaController').apiOnly()
+// }).middleware(['auth'])
 
 Route.get('/', () => {
-  return { greeting: 'Hello world in JSON' }
+    return { greeting: 'Hello world in JSON' }
 })
