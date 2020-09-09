@@ -2,7 +2,7 @@
 const moment = require('moment')
 const crypto = require('crypto')
 const User = use('App/Models/User')
-// const Mail = use('Mail')
+const Mail = use('Mail')
 class ForgotPasswordController {
     async store ({ request, response }) {
         try {
@@ -11,20 +11,20 @@ class ForgotPasswordController {
             user.token = crypto.randomBytes(10).toLocaleString('hex')
             user.token_time = new Date()
             await user.save()
-            // await Mail.send(
-            //     ['emails.forgot_password'], //template
-            //     {
-            //         email,
-            //         token: user.token,
-            //         link: `${request.input('redirect_url')}?token=${user.token}`
-            //     }, //parametros do template
-            //     message => {
-            //         message
-            //         .to(user.email)
-            //         .from('pedroabdalla@outlook.com', 'Pedro | SonhoReal')
-            //         .subject('Recuperação de senha')
-            //     }
-            // )
+            await Mail.send(
+                ['emails.forgot_password'], //template
+                {
+                    email,
+                    token: user.token,
+                    link: `${request.input('redirect_url')}?token=${user.token}`
+                }, //parametros do template
+                message => {
+                    message
+                    .to(user.email)
+                    .from('pedroabdalla@outlook.com', 'Pedro | SonhoReal')
+                    .subject('Recuperação de senha')
+                }
+            )
 
         } catch (err) {
             return response.status(err.status).send({error: 'Algo não deu certo'})
