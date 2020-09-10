@@ -1,6 +1,8 @@
 'use strict'
 
 const Categoria = use('App/Models/Categoria')
+const fileController = use('App/Controllers/Http/FileController')
+const Database = use('Database')
 
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
@@ -33,8 +35,29 @@ class CategoriaController {
      * @param {Request} ctx.request
      * @param {Response} ctx.response
      */
-    async store({ request, response }) {
-        const data = request.only(['nome', 'padrao', 'auth'])    
+    async store({ request, response, auth }) {
+        const fc = new fileController()        
+        const data = request.only(['nome'])
+        
+        // beginTransaction garante q todas as operações deram certo
+        const trx = await Database.beginTransaction()
+
+        const upload = request.file('file', {size: '2mb'})
+
+        if(upload){
+            const imgId = await fc.addProjectFile(upload)
+            const cat = await Categoria.create({ 
+                ...data,
+                user_id: auth.user.id,
+                img_id: imgId
+            })
+            await trx.commit()
+            return cat
+        } else {
+            const cat = await Categoria.create({ ...data, user_id: auth.user.id})
+            await trx.commit()
+            return cat
+        }
     }
 
     /**

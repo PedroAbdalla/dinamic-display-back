@@ -23,6 +23,7 @@ class CategoriaSchema extends Schema {
                 .onUpdate('CASCADE') // SO PQ SOU VIDA LOKA
                 .onDelete('SET NULL')
             table.boolean('padrao').defaultTo(false)
+            table.timestamps()
         })
     }
 

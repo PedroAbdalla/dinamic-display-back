@@ -31,10 +31,11 @@ Route.get('files/:id', 'FileController.show')
 Route.get('users/', 'UserController.index')
 Route.get('users/:id', 'UserController.show')
 
-// Route.group(() => {
+Route.group(() => {
     //CRUD
     Route.resource('categorias', 'CategoriaController').apiOnly()
-// }).middleware(['auth'])
+    Route.resource('figuras', 'FiguraController').apiOnly()
+}).middleware(['auth'])
 
 Route.get('/', () => {
     return { greeting: 'Hello world in JSON' }

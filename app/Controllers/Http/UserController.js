@@ -6,8 +6,7 @@ const Database = use('Database')
 class UserController {
 
     async index({ params }) {
-        const users = await User.query()
-            .fetch()
+        const users = await User.all()
         return users
     }
 
