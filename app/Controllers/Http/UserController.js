@@ -4,6 +4,18 @@ const User = use('App/Models/User')
 const Database = use('Database')
 
 class UserController {
+
+    async index({ params }) {
+        const users = await User.query()
+            .fetch()
+        return users
+    }
+
+    async show({ params }) {
+        const user = await User.findOrFail(params.id)
+        return user
+    }
+
     async store({ request }) {
         //pega os valores enviados por post
         const data = request.only(['username', 'email', 'password'])

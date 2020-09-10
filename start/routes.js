@@ -22,8 +22,14 @@ Route.post('users', 'UserController.store')
 Route.post('sessions', 'SessionController.store')
 Route.post('passwords', 'ForgotPasswordController.store')
 
+//put
+Route.put('update', 'ForgotPasswordController.update')
+
+
 //GET
 Route.get('files/:id', 'FileController.show')
+Route.get('users/', 'UserController.index')
+Route.get('users/:id', 'UserController.show')
 
 // Route.group(() => {
     //CRUD
